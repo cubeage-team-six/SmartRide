@@ -1,0 +1,29 @@
+name: Staging Deploy
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - Development
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+
+    environment:
+      name: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+
+      - name: Staging deployment placeholder
+        run: |
+          echo "Staging deployment workflow is ready."
+          echo "Actual AWS deployment will be configured later."
