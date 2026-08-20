@@ -10,6 +10,7 @@ import TermsScreen from '../screens/common/TermsScreen';
 import PrivacyScreen from '../screens/common/PrivacyScreen';
 
 import { VendorStackParamList } from './types';
+import withRoleLayout from '../components/common/withRoleLayout';
 
 // ─── Placeholder factory ───────────────────────────────────────────────────
 import { View, Text } from 'react-native';
@@ -19,7 +20,7 @@ const Placeholder = (name: string) => () => (
   </View>
 );
 
-const VendorDashboardScreen = Placeholder('Vendor Dashboard');
+const VendorDashboardScreen = withRoleLayout(Placeholder('Vendor Dashboard'), 'vendor', 'Dashboard');
 const VehicleListScreen = Placeholder('Vehicle List');
 const AddVehicleScreen = Placeholder('Add Vehicle');
 const EditVehicleScreen = Placeholder('Edit Vehicle');
