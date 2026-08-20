@@ -1,0 +1,176 @@
+name: Create Cross-Repository PR
+
+on:
+  workflow_dispatch:
+
+    inputs:
+
+      target_repo:
+        description: "Target repository (OWNER/REPOSITORY)"
+        required: true
+        type: string
+
+      source_path:
+        description: "File or folder to copy"
+        required: true
+        type: string
+
+      target_path:
+        description: "Destination path in target repository"
+        required: true
+        type: string
+
+      target_branch:
+        description: "Target repository branch"
+        required: true
+        default: "Development"
+        type: string
+
+      pr_branch:
+        description: "New branch to create"
+        required: true
+        default: "automation/cross-repo-update"
+        type: string
+
+      pr_title:
+        description: "Pull request title"
+        required: true
+        default: "chore: sync changes from Smart Ride"
+        type: string
+
+      pr_body:
+        description: "Pull request description"
+        required: true
+        default: "Automated cross-repository synchronization."
+        type: string
+
+
+permissions:
+  contents: read
+
+
+jobs:
+
+  create-pr:
+
+    name: Create Cross-Repository PR
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+
+
+      - name: Validate target branch
+        env:
+          TARGET_BRANCH: ${{ inputs.target_branch }}
+
+        run: |
+          test -n "$TARGET_BRANCH"
+
+
+      - name: Prepare target repository
+        env:
+          CROSS_REPO_TOKEN: ${{ secrets.CROSS_REPO_TOKEN }}
+          TARGET_REPO: ${{ inputs.target_repo }}
+          TARGET_BRANCH: ${{ inputs.target_branch }}
+          PR_BRANCH: ${{ inputs.pr_branch }}
+
+        run: |
+
+          test -n "$CROSS_REPO_TOKEN" || {
+            echo "Missing CROSS_REPO_TOKEN secret."
+            exit 1
+          }
+
+          git clone \
+            --branch "$TARGET_BRANCH" \
+            "https://x-access-token:${CROSS_REPO_TOKEN}@github.com/${TARGET_REPO}.git" \
+            target-repo
+
+          cd target-repo
+
+          git checkout -b "$PR_BRANCH"
+
+
+      - name: Copy requested files
+        env:
+          SOURCE_PATH: ${{ inputs.source_path }}
+          TARGET_PATH: ${{ inputs.target_path }}
+
+        run: |
+
+          test -e "$SOURCE_PATH" || {
+            echo "Source path does not exist: $SOURCE_PATH"
+            exit 1
+          }
+
+          mkdir -p "target-repo/$(dirname "$TARGET_PATH")"
+
+          if [ -d "$SOURCE_PATH" ]; then
+
+            rm -rf "target-repo/$TARGET_PATH"
+
+            cp -R "$SOURCE_PATH" \
+              "target-repo/$TARGET_PATH"
+
+          else
+
+            cp "$SOURCE_PATH" \
+              "target-repo/$TARGET_PATH"
+
+          fi
+
+
+      - name: Commit and push
+        env:
+          CROSS_REPO_TOKEN: ${{ secrets.CROSS_REPO_TOKEN }}
+          TARGET_REPO: ${{ inputs.target_repo }}
+          PR_BRANCH: ${{ inputs.pr_branch }}
+
+        working-directory: target-repo
+
+        run: |
+
+          git config user.name "github-actions[bot]"
+
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+
+            echo "No changes to synchronize."
+
+            exit 0
+
+          fi
+
+          git commit \
+            -m "chore: sync changes from Smart Ride"
+
+          git push \
+            "https://x-access-token:${CROSS_REPO_TOKEN}@github.com/${TARGET_REPO}.git" \
+            "$PR_BRANCH"
+
+
+      - name: Create Pull Request
+        env:
+          CROSS_REPO_TOKEN: ${{ secrets.CROSS_REPO_TOKEN }}
+          TARGET_REPO: ${{ inputs.target_repo }}
+          TARGET_BRANCH: ${{ inputs.target_branch }}
+          PR_BRANCH: ${{ inputs.pr_branch }}
+          PR_TITLE: ${{ inputs.pr_title }}
+          PR_BODY: ${{ inputs.pr_body }}
+
+        run: |
+
+          gh pr create \
+            --repo "$TARGET_REPO" \
+            --base "$TARGET_BRANCH" \
+            --head "$PR_BRANCH" \
+            --title "$PR_TITLE" \
+            --body "$PR_BODY"
