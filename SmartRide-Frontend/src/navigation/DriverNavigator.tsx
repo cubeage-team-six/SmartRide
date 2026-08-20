@@ -16,8 +16,10 @@ import TermsScreen from '../screens/common/TermsScreen';
 import PrivacyScreen from '../screens/common/PrivacyScreen';
 
 import { DriverStackParamList } from './types';
+import withRoleLayout from '../components/common/withRoleLayout';
 
 const Stack = createNativeStackNavigator<DriverStackParamList>();
+const DriverDashboardWithNavigation = withRoleLayout(DriverDashboardScreen, 'driver', 'Dashboard');
 
 const DriverNavigator = () => {
   return (
@@ -26,7 +28,7 @@ const DriverNavigator = () => {
       screenOptions={{ headerShown: false }}>
 
       {/* Dashboard */}
-      <Stack.Screen name="DriverDashboard" component={DriverDashboardScreen} />
+      <Stack.Screen name="DriverDashboard" component={DriverDashboardWithNavigation} />
 
       {/* Trips */}
       <Stack.Screen name="TripList" component={TripListScreen} />
