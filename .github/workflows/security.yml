@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: SmartRide-Frontend/VehicleRentalMobile
+        working-directory: SmartRide-Frontend
 
     steps:
       - name: Checkout Code
