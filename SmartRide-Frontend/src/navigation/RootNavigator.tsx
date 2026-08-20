@@ -5,6 +5,7 @@ import AuthNavigator from './AuthNavigator';
 import CustomerNavigator from './CustomerNavigator';
 import VendorNavigator from './VendorNavigator';
 import DriverNavigator from './DriverNavigator';
+import AdminNavigator from './AdminNavigator';
 
 import { RootStackParamList } from './types';
 
@@ -18,6 +19,7 @@ const RootNavigator = () => {
       <Root.Screen name="Customer" component={CustomerNavigator} />
       <Root.Screen name="Vendor" component={VendorNavigator} />
       <Root.Screen name="Driver" component={DriverNavigator} />
+      <Root.Screen name="Admin" component={AdminNavigator} />
     </Root.Navigator>
   );
 };

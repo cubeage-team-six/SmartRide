@@ -36,8 +36,10 @@ import TermsScreen             from '../screens/common/TermsScreen';
 import PrivacyScreen           from '../screens/common/PrivacyScreen';
 
 import { CustomerStackParamList } from './types';
+import withRoleLayout from '../components/common/withRoleLayout';
 
 const Stack = createNativeStackNavigator<CustomerStackParamList>();
+const CustomerHomeWithNavigation = withRoleLayout(CustomerHomeScreen, 'customer', 'Home');
 
 const CustomerNavigator = () => {
   return (
@@ -46,7 +48,7 @@ const CustomerNavigator = () => {
       screenOptions={{ headerShown: false }}>
 
       {/* ── Home ─────────────────────────────────────────── */}
-      <Stack.Screen name="CustomerHome"        component={CustomerHomeScreen} />
+      <Stack.Screen name="CustomerHome"        component={CustomerHomeWithNavigation} />
       <Stack.Screen name="SearchVehicle"       component={SearchVehicleScreen} />
       <Stack.Screen name="VehicleDetails"      component={VehicleDetailsScreen} />
       <Stack.Screen name="Filter"              component={FilterScreen} />

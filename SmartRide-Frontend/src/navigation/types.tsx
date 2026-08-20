@@ -101,10 +101,24 @@ export type DriverStackParamList = {
   Privacy: undefined;
 };
 
+// Admin stack
+export type AdminStackParamList = {
+  AdminDashboard: undefined;
+  AdminUsers: undefined;
+  AdminVendors: undefined;
+  AdminBookings: undefined;
+  AdminVehicles: undefined;
+  AdminReports: undefined;
+  AdminSettings: undefined;
+  Notifications: undefined;
+  Help: undefined;
+};
+
 // ─── Root Stack ───────────────────────────────────────────────────────────────
 export type RootStackParamList = {
   Auth: undefined;
   Customer: undefined;
   Vendor: undefined;
   Driver: undefined;
+  Admin: undefined;
 };
