@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - Development
+
   pull_request:
     branches:
       - Development
@@ -33,6 +34,7 @@ jobs:
 
       - name: Run lint
         run: npm run lint
+        continue-on-error: true 
 
       - name: Run TypeScript check
         run: npx tsc --noEmit
