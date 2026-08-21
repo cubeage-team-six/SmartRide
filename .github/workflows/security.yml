@@ -3,7 +3,7 @@ name: Security Scan
 on:
   push:
     branches:
-      - Development
+      - devops-atul
   pull_request:
     branches:
       - Development
