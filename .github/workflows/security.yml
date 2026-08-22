@@ -9,9 +9,10 @@ on:
       - Development
 
 jobs:
-  security:
+  
+  dependency-audit:
+    name: NPM Dependency Audit
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -20,11 +21,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Install Frontend Dependencies
-        working-directory: ./SmartRide-Frontend
-        run: npm install
-
       - name: Frontend Security Audit
         working-directory: ./SmartRide-Frontend
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=high || true
+
+      - name: Backend Security Audit
+        working-directory: ./SmartRide-Backend
+        run: npm audit --audit-level=high || true

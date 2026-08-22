@@ -16,7 +16,7 @@ import TermsScreen from '../screens/common/TermsScreen';
 import PrivacyScreen from '../screens/common/PrivacyScreen';
 
 import { DriverStackParamList } from './types';
-import withRoleLayout from '../compnents/common/withRoleLayout';
+import withRoleLayout from '../components/common/withRoleLayout';
 
 const Stack = createNativeStackNavigator<DriverStackParamList>();
 const DriverDashboardWithNavigation = withRoleLayout(DriverDashboardScreen, 'driver', 'Dashboard');
