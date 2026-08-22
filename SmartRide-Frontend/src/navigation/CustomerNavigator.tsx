@@ -36,7 +36,7 @@ import TermsScreen             from '../screens/common/TermsScreen';
 import PrivacyScreen           from '../screens/common/PrivacyScreen';
 
 import { CustomerStackParamList } from './types';
-import withRoleLayout from '../components/common/withRoleLayout';
+import withRoleLayout from '../compnents/common/withRoleLayout';
 
 const Stack = createNativeStackNavigator<CustomerStackParamList>();
 const CustomerHomeWithNavigation = withRoleLayout(CustomerHomeScreen, 'customer', 'Home');
