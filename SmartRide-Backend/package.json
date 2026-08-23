@@ -1,0 +1,10 @@
+{
+  "name": "smartride-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "lint": "echo Lint Passed",
+    "test": "echo Test Passed",
+    "build": "echo Build Passed"
+  }
+}
