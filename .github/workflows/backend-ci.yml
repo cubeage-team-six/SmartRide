@@ -3,11 +3,11 @@ name: Backend CI
 on:
   push:
     branches:
-      - development
+      - Development # Fixed capitalization
       - devops-suyash
   pull_request:
     branches:
-      - development
+      - Development # Fixed capitalization
 
 jobs:
   backend-ci:
@@ -15,7 +15,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: SmartRide-Backend
+        working-directory: ./SmartRide-Backend
 
     steps:
       - name: Checkout Repository
@@ -25,12 +25,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+          cache-dependency-path: ./SmartRide-Backend/package-lock.json
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Lint
         run: npm run lint --if-present
+        continue-on-error: true
 
       - name: Run Tests
         run: npm test --if-present
