@@ -12,7 +12,7 @@ type NavbarProps = {
 const Navbar = ({ title, role, onMenuPress, onNotificationsPress }: NavbarProps) => (
   <View style={styles.navbar}>
     <Pressable accessibilityLabel="Open navigation menu" accessibilityRole="button" hitSlop={8} onPress={onMenuPress} style={styles.iconButton}>
-      <MaterialCommunityIcons name="menu" size={26} color="#14213D" />
+      <MaterialCommunityIcons name="menu" size={26} color="#b7c1d7" />
     </Pressable>
     <View style={styles.heading}>
       <Text numberOfLines={1} style={styles.title}>{title}</Text>
