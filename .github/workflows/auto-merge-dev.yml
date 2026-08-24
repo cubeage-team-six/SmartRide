@@ -39,4 +39,3 @@ jobs:
             --repo "$REPO" \
             --auto \
             --squash \
-            --delete-branch
