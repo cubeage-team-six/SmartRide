@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import {VENDOR} from '../vendorTheme';
+import {VENDOR} from '../../vendorTheme';
 
 const DARK = VENDOR.dark;
 const GREEN = VENDOR.green;

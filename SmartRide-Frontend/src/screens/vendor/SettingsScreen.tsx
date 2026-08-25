@@ -7,9 +7,10 @@ import {
   TextInput,
   useWindowDimensions,
   View,
+  ViewStyle,
 } from 'react-native';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import { VENDOR } from '../vendorTheme';
+import { VENDOR } from '../../vendorTheme';
 
 const GREEN = VENDOR.green;
 const GRAY_900 = VENDOR.gray900;
@@ -809,19 +810,19 @@ const baseStyles = StyleSheet.create({
   },
 });
 
-const getFormFieldStyle = (isDesktop: boolean) => ({
+const getFormFieldStyle = (isDesktop: boolean): ViewStyle => ({
   flex: 1,
   minWidth: isDesktop ? '48%' : '100%',
   maxWidth: isDesktop ? '48%' : '100%',
 });
 
-const getFormField3Style = (isDesktop: boolean) => ({
+const getFormField3Style = (isDesktop: boolean): ViewStyle => ({
   flex: 1,
   minWidth: isDesktop ? '31%' : '100%',
   maxWidth: isDesktop ? '31%' : '100%',
 });
 
-const getFooterContentStyle = (isDesktop: boolean) => ({
+const getFooterContentStyle = (isDesktop: boolean): ViewStyle => ({
   maxWidth: isDesktop ? 800 : '100%',
   marginHorizontal: 'auto' as const,
   width: '100%',

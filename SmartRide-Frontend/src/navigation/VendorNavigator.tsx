@@ -10,7 +10,7 @@ import TermsScreen from '../screens/common/TermsScreen';
 import PrivacyScreen from '../screens/common/PrivacyScreen';
 
 import { VendorStackParamList } from './types';
-import withRoleLayout from '../compnents/common/withRoleLayout';
+import withRoleLayout from '../components/common/withRoleLayout';
 
 // ─── Placeholder factory ───────────────────────────────────────────────────
 import { View, Text } from 'react-native';
