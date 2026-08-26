@@ -553,10 +553,7 @@ function DashboardHeader({ isMobile, onMenuPress }: { isMobile: boolean, onMenuP
                                 style={{
                                     fontFamily: "Inter_400Regular",
                                     fontSize: 15,
-                                    color: "#111111",
-                                    flex: 1,
-                                    /* @ts-ignore - outlineStyle not in default React Native types */
-                                    outlineStyle: 'none',
+                                    outlineStyle: 'none' as any,
                                 }}
                             />
                         </View>

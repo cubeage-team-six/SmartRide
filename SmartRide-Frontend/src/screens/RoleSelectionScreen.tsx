@@ -1,4 +1,4 @@
-﻿import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { View, Text, Pressable, ScrollView, useWindowDimensions, Animated } from "react-native";
 import { ROLES } from "../theme";
 import { FaHome, FaUser, FaBell, FaCog, FaCheck, FaArrowRight, FaGoogle, FaApple, FaQuestionCircle } from "../components/icons";
@@ -23,7 +23,7 @@ function CheckmarkAnimated() {
         </Animated.View>
     );
 }
-export default function RoleSelectionScreen({ navigation }: RoleScreenProps) {
+export default function RoleSelectionScreen({ navigation }: any) {
     const { width } = useWindowDimensions();
     const isDesktop = width > 768;
     const [selectedRole, setSelectedRole] = React.useState<Role>(ROLES[0]);

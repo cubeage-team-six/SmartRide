@@ -1,5 +1,12 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Customer Main Pages
+import CustomerDashboardScreen from '../screens/CustomerDashboardScreen';
+import BrowseScreen            from '../screens/BrowseScreen';
+import BookingsScreen          from '../screens/BookingsScreen';
+import PaymentsScreen          from '../screens/PaymentsScreen';
+
 // Home
 import CustomerHomeScreen      from '../screens/customer/home/CustomerHome';
 import SearchVehicleScreen     from '../screens/customer/home/SearchVehicle';
@@ -12,6 +19,7 @@ import BookingDetailsScreen    from '../screens/customer/booking/BookingDetails'
 import UploadDocumentsScreen   from '../screens/customer/booking/UploadDocuments';
 import BookingConfirmationScreen from '../screens/customer/booking/BookingConfirmation';
 import MyBookingsScreen        from '../screens/customer/booking/MyBooking';
+
 // Payment
 import PaymentScreen           from '../screens/customer/payment/Payment';
 import PaymentSuccessScreen    from '../screens/customer/payment/PaymentSuccess';
@@ -24,9 +32,9 @@ import AddReviewScreen         from '../screens/customer/reviews/AddReview';
 import ReviewsScreen           from '../screens/customer/reviews/Reviews';
 
 // Profile
-import ProfileScreen           from '../screens/customer/profile/Profile';
+import ProfileScreen           from '../screens/ProfileScreen';
 import EditProfileScreen       from '../screens/customer/profile/EditProfile';
-import DocumentsScreen         from '../screens/customer/profile/Documents';
+import DocumentsScreen         from '../screens/DocumentsScreen';
 import SettingsScreen          from '../screens/customer/profile/Settings';
 
 // Common
@@ -44,8 +52,16 @@ const CustomerHomeWithNavigation = withRoleLayout(CustomerHomeScreen, 'customer'
 const CustomerNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="CustomerHome"
+      initialRouteName="Dashboard"
       screenOptions={{ headerShown: false }}>
+
+      {/* ── Main Customer Screens ──────────────────────────── */}
+      <Stack.Screen name="Dashboard"           component={CustomerDashboardScreen} />
+      <Stack.Screen name="Browse"              component={BrowseScreen} />
+      <Stack.Screen name="Bookings"            component={BookingsScreen} />
+      <Stack.Screen name="Documents"           component={DocumentsScreen} />
+      <Stack.Screen name="Payments"            component={PaymentsScreen} />
+      <Stack.Screen name="Profile"             component={ProfileScreen} />
 
       {/* ── Home ─────────────────────────────────────────── */}
       <Stack.Screen name="CustomerHome"        component={CustomerHomeWithNavigation} />
@@ -57,7 +73,6 @@ const CustomerNavigator = () => {
       <Stack.Screen name="SelectDate"          component={SelectDateScreen} />
       <Stack.Screen name="BookingDetails"      component={BookingDetailsScreen} />
       <Stack.Screen name="UploadDocuments"     component={UploadDocumentsScreen} />
-      <Stack.Screen name="BookingConfirmation" component={BookingConfirmationScreen} />
       <Stack.Screen name="MyBookings"          component={MyBookingsScreen} />
 
       {/* ── Payment ──────────────────────────────────────── */}
@@ -71,10 +86,8 @@ const CustomerNavigator = () => {
       <Stack.Screen name="AddReview"           component={AddReviewScreen} />
       <Stack.Screen name="Reviews"             component={ReviewsScreen} />
 
-      {/* ── Profile ──────────────────────────────────────── */}
-      <Stack.Screen name="Profile"             component={ProfileScreen} />
+      {/* ── Profile Details ──────────────────────────────── */}
       <Stack.Screen name="EditProfile"         component={EditProfileScreen} />
-      <Stack.Screen name="Documents"           component={DocumentsScreen} />
       <Stack.Screen name="Settings"            component={SettingsScreen} />
 
       {/* ── Common ───────────────────────────────────────── */}

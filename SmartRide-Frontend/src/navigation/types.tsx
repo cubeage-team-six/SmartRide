@@ -1,4 +1,5 @@
 // ─── Auth Stack ──────────────────────────────────────────────────────────────
+
 export type AuthStackParamList = {
   Splash: undefined;
   Login: undefined;
@@ -8,10 +9,19 @@ export type AuthStackParamList = {
   SelectRole: undefined;
 };
 
-// ─── Customer Stack ───────────────────────────────────────────────────────────
+// ─── Customer Stack ─────────────────────────────────────────────────────────
+
 export type CustomerStackParamList = {
-  // Home
+  // Main Customer Pages
+  Dashboard: undefined;
   CustomerHome: undefined;
+  Browse: undefined;
+  Bookings: undefined;
+  Documents: undefined;
+  Payments: undefined;
+  Profile: undefined;
+
+  // Home & Vehicles
   SearchVehicle: undefined;
   VehicleDetails: { vehicleId: string };
   Filter: undefined;
@@ -32,13 +42,17 @@ export type CustomerStackParamList = {
   LiveTracking: { bookingId: string };
 
   // Reviews
-  AddReview: { vehicleId: string; bookingId: string };
-  Reviews: { vehicleId: string };
+  AddReview: {
+    vehicleId: string;
+    bookingId: string;
+  };
 
-  // Profile
-  Profile: undefined;
+  Reviews: {
+    vehicleId: string;
+  };
+
+  // Profile Details
   EditProfile: undefined;
-  Documents: undefined;
   Settings: undefined;
 
   // Common
@@ -48,7 +62,8 @@ export type CustomerStackParamList = {
   Privacy: undefined;
 };
 
-// ─── Vendor Stack ────────────────────────────────────────────────────────────
+// ─── Vendor Stack ───────────────────────────────────────────────────────────
+
 export type VendorStackParamList = {
   VendorDashboard: undefined;
 
@@ -79,7 +94,8 @@ export type VendorStackParamList = {
   Privacy: undefined;
 };
 
-// ─── Driver Stack ────────────────────────────────────────────────────────────
+// ─── Driver Stack ───────────────────────────────────────────────────────────
+
 export type DriverStackParamList = {
   DriverDashboard: undefined;
 
@@ -101,7 +117,8 @@ export type DriverStackParamList = {
   Privacy: undefined;
 };
 
-// Admin stack
+// ─── Admin Stack ─────────────────────────────────────────────────────────────
+
 export type AdminStackParamList = {
   AdminDashboard: undefined;
   AdminUsers: undefined;
@@ -110,12 +127,35 @@ export type AdminStackParamList = {
   AdminVehicles: undefined;
   AdminReports: undefined;
   AdminSettings: undefined;
+
   Notifications: undefined;
   Help: undefined;
 };
 
-// ─── Root Stack ───────────────────────────────────────────────────────────────
+// ─── Root Stack ──────────────────────────────────────────────────────────────
+// These are the routes that RootNavigator directly controls.
+
 export type RootStackParamList = {
+  // Existing authentication flow
+  Role: { selectedRole?: any } | undefined;
+  Phone: { selectedRole?: any } | undefined;
+  OTP: { selectedRole?: any; phoneNumber?: string } | undefined;
+
+  // Customer Dashboard & Pages
+  Dashboard: { selectedRole?: any } | undefined;
+  Browse: undefined;
+  Bookings: undefined;
+  Documents: undefined;
+  Payments: undefined;
+  Profile: undefined;
+  EditProfile: undefined;
+  Settings: undefined;
+  Notifications: undefined;
+  Help: undefined;
+  Terms: undefined;
+  Privacy: undefined;
+
+  // Role-based navigators
   Auth: undefined;
   Customer: undefined;
   Vendor: undefined;

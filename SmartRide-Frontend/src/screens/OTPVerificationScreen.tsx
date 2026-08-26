@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, ScrollView, useWindowDimensions } from "react-native";
+import { View, Text, TextInput, Pressable, ScrollView, useWindowDimensions, Alert } from "react-native";
 import { FaArrowLeft, FaCheck, FaQuestionCircle, FaHome, FaUser, FaBell, FaCog } from "../components/icons";
 import LeftPanel from "../components/LeftPanel";
 import MobileHeader from "../components/MobileHeader";
@@ -12,18 +12,24 @@ export default function OTPVerificationScreen({ navigation, route }: OTPScreenPr
     const isDesktop = width > 768;
     const selectedRole = route.params?.selectedRole;
     const phoneNumber = route.params?.phoneNumber;
-    const RoleIcon = ICON_MAP[selectedRole?.iconName] || FaHome;
-    const [otp, setOtp] = useState<string>("");
+    const RoleIcon = (selectedRole?.iconName && ICON_MAP[selectedRole.iconName]) || FaHome;
+    const [otp, setOtp] = useState<string>("123456");
 
     const handleVerify = () => {
         if (!otp || otp.trim().length !== 6) {
-            alert("Please enter a valid 6-digit OTP.");
+            Alert.alert("Invalid OTP", "Please enter a valid 6-digit OTP.");
             return;
         }
-        if (selectedRole?.id === "driver") {
-            navigation.navigate("Dashboard", { selectedRole });
+        if (selectedRole?.id === "customer" || !selectedRole) {
+            navigation.navigate("Dashboard");
+        } else if (selectedRole?.id === "vendor") {
+            navigation.navigate("Vendor");
+        } else if (selectedRole?.id === "driver") {
+            navigation.navigate("Driver");
+        } else if (selectedRole?.id === "admin") {
+            navigation.navigate("Admin");
         } else {
-            alert(`Dashboard for ${selectedRole?.title || "this role"} is not available yet.`);
+            navigation.navigate("Dashboard", { selectedRole });
         }
     };
 
@@ -44,7 +50,7 @@ export default function OTPVerificationScreen({ navigation, route }: OTPScreenPr
                     <RoleIcon size={18} color="#1b1c1c" />
                 </View>
                 <View>
-                    <Text style={{ fontFamily: "Inter_600SemiBold", fontSize: 14, fontWeight: "600", lineHeight: 16.8, color: "#1b1c1c" }}>{selectedRole?.title}</Text>
+                    <Text style={{ fontFamily: "Inter_600SemiBold", fontSize: 14, fontWeight: "600", lineHeight: 16.8, color: "#1b1c1c" }}>{selectedRole?.title || "Customer"}</Text>
                     <Text style={{ fontFamily: "Inter_500Medium", fontSize: 12, fontWeight: "500", lineHeight: 14.4, color: "#454933", marginTop: 2 }}>Signing in as this role</Text>
                 </View>
             </View>
@@ -80,8 +86,6 @@ export default function OTPVerificationScreen({ navigation, route }: OTPScreenPr
                             textAlign: "center",
                             color: "#1b1c1c",
                             letterSpacing: 16,
-                            /* @ts-ignore - outlineStyle not in default React Native types */
-                            outlineStyle: 'none',
                         }}
                         placeholder="• • • • • •"
                         placeholderTextColor="#c5c9ad"
@@ -142,8 +146,6 @@ export default function OTPVerificationScreen({ navigation, route }: OTPScreenPr
                         borderRadius: 9999,
                         alignItems: "center",
                         justifyContent: "center",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.05)",
-                        elevation: 2,
                         transform: [{ scale: pressed ? 1.05 : 1 }],
                     })}
                 >

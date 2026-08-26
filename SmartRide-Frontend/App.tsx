@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import RootNavigator from './src/navigation/RootNavigator';
+import { CustomerProfileProvider } from './src/context/CustomerProfileContext';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -11,9 +12,11 @@ function App() {
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
+      <CustomerProfileProvider>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </CustomerProfileProvider>
     </SafeAreaProvider>
   );
 }
