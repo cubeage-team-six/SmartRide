@@ -2,10 +2,11 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+export type Role = 'customer' | 'driver' | 'vendor' | 'admin';
 export type SidebarItem = { label: string; route: string; icon: string };
 
 type SidebarProps = {
-  role: string;
+  role: Role | string;
   items: SidebarItem[];
   onClose: () => void;
   onNavigate: (route: string) => void;

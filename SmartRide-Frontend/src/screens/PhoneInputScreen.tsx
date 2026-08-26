@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, ScrollView, useWindowDimensions } from "react-native";
+import { View, Text, TextInput, Pressable, ScrollView, useWindowDimensions, Alert } from "react-native";
 import { FaArrowLeft, FaQuestionCircle, FaHome, FaUser, FaBell, FaCog } from "../components/icons";
 import LeftPanel from "../components/LeftPanel";
 import MobileHeader from "../components/MobileHeader";
@@ -11,12 +11,12 @@ export default function PhoneInputScreen({ navigation, route }: PhoneScreenProps
     const { width } = useWindowDimensions();
     const isDesktop = width > 768;
     const selectedRole = route.params?.selectedRole;
-    const [phoneNumber, setPhoneNumber] = useState<string>("");
-    const RoleIcon = ICON_MAP[selectedRole?.iconName] || FaHome;
+    const [phoneNumber, setPhoneNumber] = useState<string>("9876543210");
+    const RoleIcon = (selectedRole?.iconName && ICON_MAP[selectedRole.iconName]) || FaHome;
 
     const handleSendOTP = () => {
         if (!phoneNumber || phoneNumber.trim().length !== 10) {
-            alert("Please enter a valid 10-digit mobile number.");
+            Alert.alert("Invalid Number", "Please enter a valid 10-digit mobile number.");
             return;
         }
         navigation.navigate("OTP", { selectedRole, phoneNumber });
@@ -39,7 +39,7 @@ export default function PhoneInputScreen({ navigation, route }: PhoneScreenProps
                     <RoleIcon size={20} color="#1b1c1c" />
                 </View>
                 <View>
-                    <Text style={{ fontFamily: "Inter_600SemiBold", fontSize: 14, fontWeight: "600", lineHeight: 16.8, color: "#1b1c1c" }}>{selectedRole?.title}</Text>
+                    <Text style={{ fontFamily: "Inter_600SemiBold", fontSize: 14, fontWeight: "600", lineHeight: 16.8, color: "#1b1c1c" }}>{selectedRole?.title || "Customer"}</Text>
                     <Text style={{ fontFamily: "Inter_500Medium", fontSize: 12, fontWeight: "500", lineHeight: 14.4, color: "#5e5f60" }}>Signing in as this role</Text>
                 </View>
             </View>
@@ -118,8 +118,6 @@ export default function PhoneInputScreen({ navigation, route }: PhoneScreenProps
                         borderRadius: 9999,
                         alignItems: "center",
                         justifyContent: "center",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.05)",
-                        elevation: 2,
                         transform: [{ scale: pressed ? 1.05 : 1 }],
                     })}
                 >

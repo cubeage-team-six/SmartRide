@@ -1,47 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import Footer, { FooterTab } from '../../../components/common/Footer';
-import type { CustomerStackParamList } from '../../../navigation/types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import BookingsScreen from '../../BookingsScreen';
+import { CustomerStackParamList } from '../../../navigation/types';
 
-type CustomerNavigation = NativeStackNavigationProp<CustomerStackParamList>;
+export type MyBookingsScreenProps = NativeStackScreenProps<CustomerStackParamList, 'MyBookings'>;
 
-const MyBookings = () => {
-  const navigation = useNavigation<CustomerNavigation>();
-
-  const handleTabPress = (tab: FooterTab) => {
-    if (tab === 'home') {
-      navigation.navigate('CustomerHome');
-    } else if (tab === 'profile') {
-      navigation.navigate('Profile');
-    }
-  };
-
-  return (
-    <View style={styles.screen}>
-      <View style={styles.content}>
-        <Text style={styles.text}>My bookings</Text>
-      </View>
-      <Footer activeTab="bookings" onTabPress={handleTabPress} />
-    </View>
-  );
+const MyBooking = ({ navigation, route }: MyBookingsScreenProps) => {
+  return <BookingsScreen navigation={navigation as any} route={route as any} />;
 };
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 18,
-    color: '#333',
-  },
-});
-
-export default MyBookings;
+export default MyBooking;
