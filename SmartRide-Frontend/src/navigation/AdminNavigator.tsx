@@ -10,7 +10,7 @@ import AdminBookings from '../screens/admin/AdminBookings';
 import AdminVehicles from '../screens/admin/AdminVehicles';
 import AdminReports from '../screens/admin/AdminReports';
 import AdminSettings from '../screens/admin/AdminSettings';
-import withRoleLayout from '../compnents/common/withRoleLayout';
+import withRoleLayout from '../components/common/withRoleLayout';
 import { AdminStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<AdminStackParamList>();

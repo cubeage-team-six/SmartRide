@@ -15,24 +15,27 @@ permissions:
 jobs:
   enable-auto-merge:
     name: Enable Auto Merge
+    runs-on: ubuntu-latest
 
     if: >
       github.event.pull_request.base.ref == 'Development' &&
       github.event.pull_request.draft == false &&
-      startsWith(github.event.pull_request.head.ref, 'dev-')
-
-    runs-on: ubuntu-latest
+      (startsWith(github.event.pull_request.head.ref, 'dev-') || startsWith(github.event.pull_request.head.ref, 'devops-'))
 
     steps:
+      - name: Debug Branch Names
+        run: |
+          echo "Target Branch (Base): ${{ github.event.pull_request.base.ref }}"
+          echo "Source Branch (Head): ${{ github.event.pull_request.head.ref }}"
+          echo "Is Draft: ${{ github.event.pull_request.draft }}"
+
       - name: Enable auto-merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
-
         run: |
           gh pr merge "$PR_NUMBER" \
             --repo "$REPO" \
             --auto \
             --squash \
-            --delete-branch
