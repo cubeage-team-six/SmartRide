@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import Footer, { FooterTab } from '../../../compnents/common/Footer';
+import Footer, { FooterTab } from '../../../components/common/Footer';
 import type { CustomerStackParamList } from '../../../navigation/types';
 
 type CustomerNavigation = NativeStackNavigationProp<CustomerStackParamList>;
