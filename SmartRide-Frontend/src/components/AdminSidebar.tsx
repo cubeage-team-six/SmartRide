@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 type SidebarProps = {
   collapsed: boolean;
@@ -26,23 +27,36 @@ type RoleItemProps = {
   onPress: () => void;
 };
 
-export default function Sidebar({
+export default function AdminSidebar({
   collapsed,
   isMobile,
 }: SidebarProps) {
+  const navigation = useNavigation<any>();
+
   const [activeItem, setActiveItem] = useState<string>("Overview");
 
   if (collapsed) {
     return null;
   }
 
-  const handlePress = (item: string) => {
-    setActiveItem(item);
+  const navigateTo = (title: string, route: string) => {
+    setActiveItem(title);
+    navigation.navigate(route);
+  };
+
+  const switchRole = (role: string, route: string) => {
+    setActiveItem(role);
+    navigation.navigate(route);
+  };
+
+  const handleSignOut = () => {
+    setActiveItem("Sign Out");
+
+    navigation.navigate("Auth");
   };
 
   return (
     <View style={[styles.sidebar, isMobile && styles.mobileSidebar]}>
-      {/* Logo Section */}
       <View style={styles.logoSection}>
         <View style={styles.logoBox}>
           <MaterialCommunityIcons
@@ -54,8 +68,7 @@ export default function Sidebar({
 
         <Text style={styles.logoText}>RideAny</Text>
       </View>
-
-      {/* Profile Section */}
+      
       <View style={styles.profileSection}>
         <View style={styles.profileAvatar}>
           <Text style={styles.profileAvatarText}>A</Text>
@@ -79,82 +92,110 @@ export default function Sidebar({
             icon="view-grid-outline"
             title="Overview"
             active={activeItem === "Overview"}
-            onPress={() => handlePress("Overview")}
+            onPress={() =>
+              navigateTo("Overview", "AdminDashboard")
+            }
           />
 
           <MenuItem
             icon="account-group-outline"
             title="Users"
             active={activeItem === "Users"}
-            onPress={() => handlePress("Users")}
+            onPress={() =>
+              navigateTo("Users", "AdminUsers")
+            }
           />
 
           <MenuItem
             icon="office-building-outline"
             title="Vendors"
             active={activeItem === "Vendors"}
-            onPress={() => handlePress("Vendors")}
+            onPress={() =>
+              navigateTo("Vendors", "AdminVendors")
+            }
           />
 
           <MenuItem
             icon="car-outline"
             title="Vehicles"
             active={activeItem === "Vehicles"}
-            onPress={() => handlePress("Vehicles")}
+            onPress={() =>
+              navigateTo("Vehicles", "AdminVehicles")
+            }
           />
 
           <MenuItem
             icon="clipboard-text-outline"
             title="Bookings"
             active={activeItem === "Bookings"}
-            onPress={() => handlePress("Bookings")}
+            onPress={() =>
+              navigateTo("Bookings", "AdminBookings")
+            }
           />
 
           <MenuItem
             icon="credit-card-outline"
             title="Payments"
             active={activeItem === "Payments"}
-            onPress={() => handlePress("Payments")}
+            onPress={() =>
+              navigateTo("Payments", "AdminPayments")
+            }
           />
 
           <MenuItem
             icon="chart-line"
             title="Analytics"
             active={activeItem === "Analytics"}
-            onPress={() => handlePress("Analytics")}
+            onPress={() =>
+              navigateTo("Analytics", "AdminReports")
+            }
+          />
+
+          <MenuItem
+            icon="cog-outline"
+            title="Settings"
+            active={activeItem === "Settings"}
+            onPress={() =>
+              navigateTo("Settings", "AdminSettings")
+            }
           />
         </View>
 
-        {/* Switch Role */}
+
         <View style={styles.switchSection}>
           <Text style={styles.switchTitle}>SWITCH ROLE</Text>
 
           <RoleItem
             title="Customer"
             active={activeItem === "Customer"}
-            onPress={() => handlePress("Customer")}
+            onPress={() =>
+              switchRole("Customer", "Customer")
+            }
           />
 
           <RoleItem
             title="Vendor"
             active={activeItem === "Vendor"}
-            onPress={() => handlePress("Vendor")}
+            onPress={() =>
+              switchRole("Vendor", "Vendor")
+            }
           />
 
           <RoleItem
             title="Driver"
             active={activeItem === "Driver"}
-            onPress={() => handlePress("Driver")}
+            onPress={() =>
+              switchRole("Driver", "Driver")
+            }
           />
         </View>
 
-        {/* Sign Out */}
         <View style={styles.signOutSection}>
           <MenuItem
             icon="logout-variant"
             title="Sign Out"
             active={activeItem === "Sign Out"}
-            onPress={() => handlePress("Sign Out")}
+            onPress={handleSignOut}
           />
         </View>
       </ScrollView>
@@ -183,7 +224,12 @@ function MenuItem({
         color={active ? "#090B0A" : "#92969F"}
       />
 
-      <Text style={[styles.menuText, active && styles.activeMenuText]}>
+      <Text
+        style={[
+          styles.menuText,
+          active && styles.activeMenuText,
+        ]}
+      >
         {title}
       </Text>
     </Pressable>
@@ -203,9 +249,19 @@ function RoleItem({
         pressed && styles.rolePressed,
       ]}
     >
-      <View style={[styles.roleDot, active && styles.activeRoleDot]} />
+      <View
+        style={[
+          styles.roleDot,
+          active && styles.activeRoleDot,
+        ]}
+      />
 
-      <Text style={[styles.roleText, active && styles.activeRoleText]}>
+      <Text
+        style={[
+          styles.roleText,
+          active && styles.activeRoleText,
+        ]}
+      >
         {title}
       </Text>
     </Pressable>
